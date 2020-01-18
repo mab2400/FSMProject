@@ -1,21 +1,31 @@
- # construct a new FSM, given the starting node, a list of accepting
- # nodes, and a list of intermediary nodes.
+import FSMModule, NodeModule
+# Construct a new FSM, given the starting node, a list of accepting
+# nodes, a list of intermediary nodes, and the input string.
 
- fsm = FSM(start, accepting, intermediary)
+fsm = FSM(start, accepting, intermediary, inputStr)
 
- # set the transition functions
-     # based on input --> HOW EXACTLY AM I GOING TO DO THIS?
-     # using the dict, I will be able to access the node object from the user's inputted        strings
- # while loop iterates through the nodes starting with the given start node
- '''
- node = start
- while(input is still being read):
-     read next char of input
-     put input into node's transition(), returns the next node
-     node = result of transition()
+'''
+Transition functions will be set in my test code
+Like this:
+add_transition(node1, node2, “c”)
+add_transition(node2, node3, “d”)
+The for loop below goes through the nodes, beginning with the
+given start node. Within the loop, I update the currentNode
+based on the transition function of that node. If at any point
+we arrive at one of the accepting nodes, then I break out of the
+loop because we are finished. If by the end of the inputStr
+we have not reached an accepting node, I print "Not accepted."
+'''
 
- if(at accepting node):
-     accepted!
- else:
-     not accepted!
- '''
+currentNode = fsm.start
+
+for char in inputStr:
+
+    currentNode = fsm.transition(currentNode, char)
+
+    if currentNode in fsm.accepting:
+        print("Accepted!")
+        break
+
+if currentNode not in fsm.accepting:
+    print("Not accepted.")
