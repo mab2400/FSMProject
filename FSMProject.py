@@ -1,100 +1,33 @@
-#_______________________________________
+import FSMModule, NodeModule
+# Construct a new FSM, given the starting node, a list of accepting
+# nodes, a list of intermediary nodes, and the input string.
 
-# FSM class
-class FSM:
+fsm = FSM(start, accepting, intermediary, inputStr)
 
-# Nodes
-    # User inputs
-    # 1) Starting node
-    # 2) Accepting node(s)
-    # 3) Intermediary node(s)
-
-# Node start =
-# Node[] accepting =
-# Node[] intermediary =
-
-# inputStr variable: a string of characters
-    # in the main method we'll get each char from the input one at a time
-
-    def __init__(self):
-        self.start = null
-        self.accepting = []
-        self.intermediary = []
-        self.inputStr = ''
-        self.nodeDict = {}
-
-# Dict to connect inputted strings of node names to the actual node objects
-# I populate this dict in the main method when I take in input.
-# user inputs 'A', 'B', 'C' which my program should transform into node objects A, B, C
-
-#_______________________________________
-
-# Node class
-
-# name --> based on the inputted node names from the user in main method
-# transition() function --> how would the user set the transition function?
-
-class Node:
-
-    def __init__(self, inputName):
-        self.name = inputName
-
-    def transition(self):
-        # TRANSITION FUNCTION
-        # return a Node
-#_______________________________________
-
-# construct a new FSM.
-
-fsm = FSM()
-
-# construct inputted nodes:
-    # set start, accepting, intermediary of the FSM object
-    # this should be done at the same time as you construct inputted nodes.
-    # like this:
-    # input start node: __
-    # [constructs node, sets start variable in FSM class as that node ]
-    # input accepting node(s): __
-    # [constructs node(s) using a loop, creates a list and sets variable in FSM class]
-    # input intermediary node(s): __
-    # [constructs node(s) using a loop, creates a list and sets variable in FSM class]
-
-startStr = input("Start node: ")
-start = Node(startStr)
-# add to the FSM
-fsm.start = start
-# add to the FSM dict
-fsm.nodeDict[startStr] = start
-
-acceptingStr = input("Accepting node(s): ")
-for nodeStr in acceptingStr.split():
-    node = Node(nodeStr)
-    # add to the FSM
-    fsm.accepting.append(node)
-    # add to the FSM dict
-    fsm.nodeDict[nodeStr] = node
-
-intermediaryStr = input("Intermediary node(s): ")
-for nodeStr in intermediaryStr.split():
-    node = Node(nodeStr)
-    # add to the FSM
-    fsm.intermediary.append(node)
-    # add to the FSM dict
-    fsm.nodeDict[nodeStr] = node
-
-# set the transition functions
-    # based on input --> HOW EXACTLY AM I GOING TO DO THIS?
-    # using the dict, I will be able to access the node object from the user's inputted strings
-# while loop iterates through the nodes starting with the given start node
 '''
-node = start
-while(input is still being read):
-    read next char of input
-    put input into node's transition(), returns the next node
-    node = result of transition()
+Transition functions will be set in my test code
+Like this:
+add_transition(node1, node2, “c”)
+add_transition(node2, node3, “d”)
 
-if(at accepting node):
-    accepted!
-else:
-    not accepted!
+The for loop below goes through the nodes, beginning with the
+given start node. Within the loop, I update the currentNode
+based on the transition function of that node. If at any point
+we arrive at one of the accepting nodes, then I break out of the
+loop because we are finished. If by the end of the inputStr
+we have not reached an accepting node, I print "Not accepted."
+
 '''
+
+currentNode = fsm.start
+
+for char in inputStr:
+
+    currentNode = fsm.transition(currentNode, char)
+
+    if currentNode in fsm.accepting:
+        print("Accepted!")
+        break
+
+if currentNode not in fsm.accepting:
+    print("Not accepted.")
