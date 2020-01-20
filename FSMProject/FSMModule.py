@@ -10,8 +10,9 @@
 
          '''
          transitionDict will look something like this
-         {currentNode : [(char, nextNode), (char, nextNode)],
-         currentNode : [(char, nextNode), (char, nextNode), (char, nextNode)]}
+
+         {currentNode : {char : nextNode, char : nextNode},
+         currentNode : {char : nextNode, char : nextNode, char : nextNode}}
          '''
 
     def add_transition(self, currentNode, char, nextNode):
@@ -20,11 +21,10 @@
         # then move to node 2.
 
         # If currentNode already has a value in the dict,
-        # we need to append to the existing list.
+        # we need to add the additional key-value pair
+        # which is char : nextNode.
 
-        valueList = transitionDict.get(currentNode)
-        valueList.append((char, nextNode))
-        transitionDict[currentNode] = valueList
+        transitionDict.get(currentNode)[char] = nextNode
 
     def transition(self, currentNode, char):
         # this will return the next node,
@@ -38,7 +38,6 @@
 
         for node in transitionDict.keys():
             if node is currentNode:
-                # double-check to make sure this equality is ok
-                for c,nextN in transitionDict[currentNode]:
+                for c in transitionDict[currentNode].getKeys():
                     if c == char:
-                        return nextN
+                        return transitionDict[currentNode][c]
