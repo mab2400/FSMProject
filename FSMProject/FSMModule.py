@@ -23,11 +23,15 @@
         # If currentNode already has a value in the dict,
         # we need to add the additional key-value pair
         # which is char : nextNode.
+        # Otherwise, add the new key-value pair to the dict.
 
-        transitionDict.get(currentNode)[char] = nextNode
+        if currentNode in transitionDict.keys():
+            transitionDict[currentNode][char] = nextNode
+        else:
+            transitionDict.update({currentNode : {char : nextNode}})
 
     def transition(self, currentNode, char):
-        # this will return the next node,
+        # this returns the next node,
         # based on the currentNode and the input char.
 
         # First, I find the current node in the set of
@@ -38,6 +42,6 @@
 
         for node in transitionDict.keys():
             if node is currentNode:
-                for c in transitionDict[currentNode].getKeys():
+                for c in transitionDict[currentNode].keys():
                     if c == char:
                         return transitionDict[currentNode][c]
